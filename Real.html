@@ -20,19 +20,24 @@
       height: 100%;
       object-fit: cover; /* Ensures the image covers the container without stretching */
     }
+
+    .run {
+      z-index: 99;
+    }
+
   </style>
 </head>
 <body>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
-    <div class="carousel-item active">
+    <div class="carousel-item active" id="six">
       <img class="d-block w-100" src="img/slide-img1.jpg" alt="First slide">
     </div>
-    <div class="carousel-item">
+    <div class="carousel-item" id="four">
       <img class="d-block w-100" src="img/slide-img2.jpg" alt="Second slide">
     </div>
-    <div class="carousel-item">
+    <div class="carousel-item" id="one">
       <img class="d-block w-100" src="img/slide-img3.jpg" alt="Third slide">
     </div>
   </div>
@@ -42,24 +47,33 @@
 <button id="pauseButton" class="btn btn-primary mt-3">Hold to Pause Carousel & Play Music</button>
 
 <!-- Audio Element -->
-<audio id="myAudio" src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"></audio>
-<audio id="myAudio" src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"></audio>
+<audio id="six2" src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"></audio>
+<audio id="four2" src="./music/Ravi Shastri Commentary.mp3"></audio>
+<audio id="one2" src="./music/crowd_the_hill_language-69994.mp3"></audio>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
+
   // Initialize the carousel with interval of 100 milliseconds
   $('#myCarousel').carousel({
     interval: 0.1 // 0.1 second
   });
 
-  var audio = document.getElementById('myAudio');
+  function playMusic() {
+    var activeSlide = document.querySelector('.carousel-item.active');
+    var Id = activeSlide.id;
+    console.log(Id);
+    console.log(activeSlide);
+    var audio = document.getElementById(Id+2);
+    audio.play();
+  }
 
   // Function to pause the carousel and play music
   function pauseCarouselAndPlayMusic() {
     $('#myCarousel').carousel('pause');
-    audio.play();
+    playMusic();
   }
 
   // Function to resume the carousel and pause music
