@@ -1,123 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap Carousel Example</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <style>
-    .carousel-item {
-      transition: transform 0.1s ease-in-out;
-      height: 500px; /* Set custom height */
-    }
-    /* Custom width for the carousel */
-    #myCarousel {
-      width: 35%; /* Adjust this value to change the width */
-      margin: 0 auto; /* Center the carousel */
-    }
-    /* Ensure images take up full height of the carousel */
-    #myCarousel img {
-      height: 100%;
-      object-fit: cover; /* Ensures the image covers the container without stretching */
-    }
-
-    #pauseButton {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    @media only screen and (max-width: 768px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bootstrap Carousel Example</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <style>
+      .carousel-item {
+        transition: transform 0.1s ease-in-out;
+        height: 500px; /* Set custom height */
+      }
+      /* Custom width for the carousel */
       #myCarousel {
-      width: 100%; /* Adjust this value to change the width */
-      margin: 0 auto; /* Center the carousel */
-    }
-    }
+        width: 35%; /* Adjust this value to change the width */
+        margin: 0 auto; /* Center the carousel */
+      }
+      /* Ensure images take up full height of the carousel */
+      #myCarousel img {
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container without stretching */
+      }
 
-  </style>
-</head>
-<body>
+      #pauseButton {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active" id="six">
-      <img class="d-block w-100" src="img/slide-img1.jpg" alt="First slide">
+      @media only screen and (max-width: 768px) {
+        #myCarousel {
+          width: 100%; /* Adjust this value to change the width */
+          margin: 0 auto; /* Center the carousel */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Fantasy</a>
+        <div>40 Vale From 12 Geek</div>
+      </div>
+    </nav>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" id="six">
+          <img
+            class="d-block w-100"
+            src="img/slide-img1.jpg"
+            alt="First slide"
+          />
+        </div>
+        <div class="carousel-item" id="four">
+          <img
+            class="d-block w-100"
+            src="img/slide-img2.jpg"
+            alt="Second slide"
+          />
+        </div>
+        <div class="carousel-item" id="one">
+          <img
+            class="d-block w-100"
+            src="img/slide-img3.jpg"
+            alt="Third slide"
+          />
+        </div>
+      </div>
     </div>
-    <div class="carousel-item" id="four">
-      <img class="d-block w-100" src="img/slide-img2.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item" id="one">
-      <img class="d-block w-100" src="img/slide-img3.jpg" alt="Third slide">
-    </div>
-  </div>
-</div>
 
-<!-- Pause Button -->
-<button id="pauseButton" class="btn btn-dark mt-3">Hold Button & Ply Music</button>
+    <!-- Pause Button -->
+    <button id="pauseButton" class="btn btn-dark mt-3">
+      Hold Button & Ply Music
+    </button>
 
-<audio id="background_music" src="./music/de_ghuma_ke.mp3"></audio>
+    <audio id="background_music" src="./music/de_ghuma_ke.mp3"></audio>
 
-<audio id="six0" src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"></audio>
-<audio id="four0" src="./music/Ravi Shastri Commentary.mp3"></audio>
-<audio id="one0" src="./music/crowd_the_hill_language-69994.mp3"></audio>
+    <audio
+      id="six0"
+      src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"
+    ></audio>
+    <audio id="four0" src="./music/Ravi Shastri Commentary.mp3"></audio>
+    <audio id="one0" src="./music/crowd_the_hill_language-69994.mp3"></audio>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-<script>
-  // Initialize the carousel with interval of 100 milliseconds
-  $('#myCarousel').carousel({
-    interval: 0.1 // 0.1 second
-  });
+    <script>
+      const target = 40;
+      var runs = target;
+      var balls = 12;
+      
+      // Initialize the carousel with interval of 100 milliseconds
+      $("#myCarousel").carousel({
+        interval: 0.1, // 0.1 second
+      });
 
-  var backgroundAudio = document.getElementById('background_music');
-  backgroundAudio.play();
+      function calcuateScore() {
 
-  function playMusic() {
-    var activeSlide = document.querySelector('.carousel-item.active');
-    var Id = activeSlide.id;
-    console.log(Id);
-    console.log(activeSlide);
-    var audio = document.getElementById(Id+'0');
-    audio.play();
-  }
+      }
 
-  function pauseCarouselAndPlayMusic() {
-    $('#myCarousel').carousel('pause');
-    setTimeout(function() {
-      var activeSlide = document.querySelector('.carousel-item.active');
-      var Id = activeSlide.id;
-      console.log("Active slide ID after pause:", Id);
-      playMusic();
-    }, 100); // Slight delay to ensure the active slide is updated
-  }
+      var backgroundAudio = document.getElementById("background_music");
+      backgroundAudio.play();
 
-  // Function to resume the carousel and pause music
-  function resumeCarouselAndPauseMusic() {
-    $('#myCarousel').carousel('cycle');
-    var activeSlide = document.querySelector('.carousel-item.active');
-    var Id = activeSlide.id;
-    console.log('Active slide ID for pausing music:', Id);
-    var audio = document.getElementById(Id + '0');
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-    } else {
-      console.error('No audio element found for ID:', Id + '0');
-    }
-  }
+      function playMusic() {
+        var activeSlide = document.querySelector(".carousel-item.active");
+        var Id = activeSlide.id;
+        console.log(Id);
+        console.log(activeSlide);
+        var audio = document.getElementById(Id + "0");
+        audio.play();
+      }
 
+      function pauseCarouselAndPlayMusic() {
+        $("#myCarousel").carousel("pause");
+        setTimeout(function () {
+          var activeSlide = document.querySelector(".carousel-item.active");
+          var Id = activeSlide.id;
+          console.log("Active slide ID after pause:", Id);
+          playMusic();
+        }, 100); // Slight delay to ensure the active slide is updated
+        calcuateScore();
+      }
 
-  // Add event listeners to the pause button for holding and releasing
-  $('#pauseButton').on('mousedown touchstart', function() {
-    pauseCarouselAndPlayMusic(); // Pause the carousel and play music when the button is held down or touched
-  });
+      // Function to resume the carousel and pause music
+      function resumeCarouselAndPauseMusic() {
+        $("#myCarousel").carousel("cycle");
+        var activeSlide = document.querySelector(".carousel-item.active");
+        var Id = activeSlide.id;
+        console.log("Active slide ID for pausing music:", Id);
+        var audio = document.getElementById(Id + "0");
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0;
+        } else {
+          console.error("No audio element found for ID:", Id + "0");
+        }
+      }
 
-  $('#pauseButton').on('mouseup touchend', function() {
-    resumeCarouselAndPauseMusic(); // Resume the carousel and pause music when the button is released or touch ends
-  });
-</script>
+      // Add event listeners to the pause button for holding and releasing
+      $("#pauseButton").on("mousedown touchstart", function () {
+        pauseCarouselAndPlayMusic(); // Pause the carousel and play music when the button is held down or touched
+      });
 
-</body>
+      $("#pauseButton").on("mouseup touchend", function () {
+        resumeCarouselAndPauseMusic(); // Resume the carousel and pause music when the button is released or touch ends
+      });
+    </script>
+  </body>
 </html>
