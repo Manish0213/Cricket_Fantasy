@@ -8,11 +8,11 @@
   <style>
     .carousel-item {
       transition: transform 0.1s ease-in-out;
-      height: 400px; /* Set custom height */
+      height: 500px; /* Set custom height */
     }
     /* Custom width for the carousel */
     #myCarousel {
-      width: 50%; /* Adjust this value to change the width */
+      width: 35%; /* Adjust this value to change the width */
       margin: 0 auto; /* Center the carousel */
     }
     /* Ensure images take up full height of the carousel */
@@ -21,8 +21,17 @@
       object-fit: cover; /* Ensures the image covers the container without stretching */
     }
 
-    .run {
-      z-index: 99;
+    #pauseButton {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    @media only screen and (max-width: 768px) {
+      #myCarousel {
+      width: 100%; /* Adjust this value to change the width */
+      margin: 0 auto; /* Center the carousel */
+    }
     }
 
   </style>
@@ -44,44 +53,61 @@
 </div>
 
 <!-- Pause Button -->
-<button id="pauseButton" class="btn btn-primary mt-3">Hold to Pause Carousel & Play Music</button>
+<button id="pauseButton" class="btn btn-dark mt-3">Hold Button & Ply Music</button>
 
-<!-- Audio Element -->
-<audio id="six2" src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"></audio>
-<audio id="four2" src="./music/Ravi Shastri Commentary.mp3"></audio>
-<audio id="one2" src="./music/crowd_the_hill_language-69994.mp3"></audio>
+<audio id="background_music" src="./music/de_ghuma_ke.mp3"></audio>
+
+<audio id="six0" src="./music/Hitting Six _ Cricket _ Commentary _ Sound.mp3"></audio>
+<audio id="four0" src="./music/Ravi Shastri Commentary.mp3"></audio>
+<audio id="one0" src="./music/crowd_the_hill_language-69994.mp3"></audio>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script>
 
+<script>
   // Initialize the carousel with interval of 100 milliseconds
   $('#myCarousel').carousel({
     interval: 0.1 // 0.1 second
   });
+
+  var backgroundAudio = document.getElementById('background_music');
+  backgroundAudio.play();
 
   function playMusic() {
     var activeSlide = document.querySelector('.carousel-item.active');
     var Id = activeSlide.id;
     console.log(Id);
     console.log(activeSlide);
-    var audio = document.getElementById(Id+2);
+    var audio = document.getElementById(Id+'0');
     audio.play();
   }
 
-  // Function to pause the carousel and play music
   function pauseCarouselAndPlayMusic() {
     $('#myCarousel').carousel('pause');
-    playMusic();
+    setTimeout(function() {
+      var activeSlide = document.querySelector('.carousel-item.active');
+      var Id = activeSlide.id;
+      console.log("Active slide ID after pause:", Id);
+      playMusic();
+    }, 100); // Slight delay to ensure the active slide is updated
   }
 
   // Function to resume the carousel and pause music
   function resumeCarouselAndPauseMusic() {
     $('#myCarousel').carousel('cycle');
-    audio.pause();
-    audio.currentTime = 0; // Reset audio to the beginning
+    var activeSlide = document.querySelector('.carousel-item.active');
+    var Id = activeSlide.id;
+    console.log('Active slide ID for pausing music:', Id);
+    var audio = document.getElementById(Id + '0');
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+    } else {
+      console.error('No audio element found for ID:', Id + '0');
+    }
   }
+
 
   // Add event listeners to the pause button for holding and releasing
   $('#pauseButton').on('mousedown touchstart', function() {
