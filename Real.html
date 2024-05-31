@@ -30,6 +30,14 @@
         transform: translateX(-50%);
       }
 
+      .carousel-item.active div{
+        position: absolute;
+        top: 50%;
+        left: 15%;
+        font-size: 80px;
+        transition: top 0.5s ease-in-out, left 0.5s ease-in-out, font-size 0.5s ease-in-out;
+      }
+
       @media only screen and (max-width: 768px) {
         #myCarousel {
           width: 100%; /* Adjust this value to change the width */
@@ -42,7 +50,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Fantasy</a>
-        <div>40 Vale From 12 Geek</div>
+        <span>Target: <span id="target">20</span></span>
+        <div><span id="runs">5</span> Vale From <span id="balls">1</span> Geek</div>
       </div>
     </nav>
 
@@ -54,6 +63,7 @@
             src="img/slide-img1.jpg"
             alt="First slide"
           />
+          <div class="">6</div>
         </div>
         <div class="carousel-item" id="four">
           <img
@@ -61,6 +71,7 @@
             src="img/slide-img2.jpg"
             alt="Second slide"
           />
+          <div class="">4</div>
         </div>
         <div class="carousel-item" id="one">
           <img
@@ -68,6 +79,7 @@
             src="img/slide-img3.jpg"
             alt="Third slide"
           />
+          <div class="">1</div>
         </div>
       </div>
     </div>
@@ -94,14 +106,51 @@
       const target = 40;
       var runs = target;
       var balls = 12;
-      
+
+      const requiredRuns = document.getElementById('runs');
+      requiredRuns.textContent = runs;
+      const remainingBalls = document.getElementById('balls');
+      remainingBalls.textContent = balls;
+      const targetRun = document.getElementById('target');
+      targetRun.textContent = target;
+
       // Initialize the carousel with interval of 100 milliseconds
       $("#myCarousel").carousel({
         interval: 0.1, // 0.1 second
       });
 
-      function calcuateScore() {
+      function calculateScore(number) {
+        runs = runs-number;
+        balls = balls-1;
+        const requiredRuns = document.getElementById('runs');
+        requiredRuns.textContent = runs;
+        const remainingBalls = document.getElementById('balls');
+        remainingBalls.textContent = balls;
 
+        if(runs<=0 && balls>=0){
+          // alert("You Won");
+          $("#pauseButton").prop("disabled", true);
+          // Remove event listeners
+          $("#pauseButton").off("click");
+          $("#pauseButton").off("touchstart");
+
+        }
+        else if(runs===1 && balls===0){
+          // alert("Match Tied");
+          $("#pauseButton").prop("disabled", true);
+          // Remove event listeners
+          $("#pauseButton").off("click");
+          $("#pauseButton").off("touchstart");
+
+        }
+        else if(runs>0 && balls<=0){
+          $("#pauseButton").prop("disabled", true);
+          // Remove event listeners
+          $("#pauseButton").off("click");
+          $("#pauseButton").off("touchstart");
+          $("#pauseButton").off("touchend");
+
+        }
       }
 
       var backgroundAudio = document.getElementById("background_music");
@@ -123,13 +172,17 @@
           var Id = activeSlide.id;
           console.log("Active slide ID after pause:", Id);
           playMusic();
-        }, 100); // Slight delay to ensure the active slide is updated
-        calcuateScore();
+          var firstDiv = activeSlide.querySelector("div");
+          var content = firstDiv.textContent || firstDiv.innerText;
+          var number = Number(content); 
+          calculateScore(number);
+        }, 200); // Slight delay to ensure the active slide is updated
       }
 
       // Function to resume the carousel and pause music
       function resumeCarouselAndPauseMusic() {
-        $("#myCarousel").carousel("cycle");
+          $("#myCarousel").carousel("cycle");
+
         var activeSlide = document.querySelector(".carousel-item.active");
         var Id = activeSlide.id;
         console.log("Active slide ID for pausing music:", Id);
@@ -143,13 +196,25 @@
       }
 
       // Add event listeners to the pause button for holding and releasing
+      $("#pauseButton").on("touchstart", function () {
+          pauseCarouselAndPlayMusic(); // Pause the carousel and play music when the button is held down or touched
+      });
+
+      $("#pauseButton").on("touchend", function () {
+        resumeCarouselAndPauseMusic(); // Resume the carousel and pause music when the button is released or touch ends
+      });
+
+
+
+    </script>
+  </body>
+</html>
+
+<!-- Add event listeners to the pause button for holding and releasing
       $("#pauseButton").on("mousedown touchstart", function () {
         pauseCarouselAndPlayMusic(); // Pause the carousel and play music when the button is held down or touched
       });
 
       $("#pauseButton").on("mouseup touchend", function () {
         resumeCarouselAndPauseMusic(); // Resume the carousel and pause music when the button is released or touch ends
-      });
-    </script>
-  </body>
-</html>
+      }); -->
